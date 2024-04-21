@@ -29,7 +29,7 @@ products.forEach((product) => {
       </div>
 
       <div class="product-quantity-container">
-        <select>
+        <select class="js-quantity-selector-${product.id}">
           <option selected value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -64,6 +64,11 @@ document.querySelectorAll('.js-add-to-cart')
     button.addEventListener('click', () => {
       const productId = button.dataset.productId;
 
+      // make the select list interactive
+      const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
+      const itemSelector = Number(quantitySelector.value);
+      console.log(itemSelector);
+
       // dtermine if there are matching items in the cart
       let matchingItem;
 
@@ -79,9 +84,10 @@ document.querySelectorAll('.js-add-to-cart')
       } else {                    //else add item to cart
         cart.push({
           productId,
-          quantity: 1
+          quantity: itemSelector
         });
       }
+
       let cartQuantity = 0;
 
       cart.forEach((cartItem) => {
@@ -89,5 +95,6 @@ document.querySelectorAll('.js-add-to-cart')
       });
 
       document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+      console.log(cart)
     });
   });
